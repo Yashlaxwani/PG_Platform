@@ -21,7 +21,7 @@ const StaffList = () => {
       name: "Christine Brooks",
       address: "089 Kutch Green Apt. 448",
       joiningDate: "04 Sep 2019",
-      roomShareType: "Electric",
+      roomShareType: "1",
       status: "Completed",
     },
     {
@@ -29,7 +29,7 @@ const StaffList = () => {
       name: "Rosie Pearson",
       address: "979 Immanuel Ferry Suite 526",
       joiningDate: "28 May 2019",
-      roomShareType: "Book",
+      roomShareType: "2",
       status: "Processing",
     },
     {
@@ -37,7 +37,7 @@ const StaffList = () => {
       name: "Darrell Caldwell",
       address: "8587 Frida Ports",
       joiningDate: "23 Nov 2019",
-      roomShareType: "Medicine",
+      roomShareType: "3",
       status: "Rejected",
     },
     {
@@ -45,7 +45,7 @@ const StaffList = () => {
       name: "Gilbert Johnston",
       address: "768 Destiny Lake Suite 600",
       joiningDate: "05 Feb 2019",
-      roomShareType: "Mobile",
+      roomShareType: "4",
       status: "Completed",
     },
     {
@@ -53,7 +53,7 @@ const StaffList = () => {
       name: "Alan Cain",
       address: "042 Mylene Throughway",
       joiningDate: "29 Jul 2019",
-      roomShareType: "Watch",
+      roomShareType: "5",
       status: "Processing",
     },
   ]
