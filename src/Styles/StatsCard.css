@@ -1,0 +1,105 @@
+.stats-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.stats-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.stats-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+}
+
+.stats-card.blue::before {
+  background: linear-gradient(90deg, #3b82f6, #6366f1);
+}
+
+.stats-card.yellow::before {
+  background: linear-gradient(90deg, #f59e0b, #eab308);
+}
+
+.stats-card.green::before {
+  background: linear-gradient(90deg, #10b981, #059669);
+}
+
+.stats-card.orange::before {
+  background: linear-gradient(90deg, #f97316, #ea580c);
+}
+
+.stats-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stats-text {
+  flex: 1;
+}
+
+.stats-title {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.stats-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 12px;
+  line-height: 1;
+}
+
+.stats-change {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.stats-change.up {
+  color: #059669;
+}
+
+.stats-change.down {
+  color: #dc2626;
+}
+
+.change-icon {
+  font-size: 14px;
+}
+
+.stats-icon {
+  font-size: 48px;
+  opacity: 0.1;
+  margin-left: 16px;
+}
+
+@media (max-width: 768px) {
+  .stats-card {
+    padding: 20px;
+  }
+
+  .stats-value {
+    font-size: 24px;
+  }
+
+  .stats-icon {
+    font-size: 36px;
+  }
+}
