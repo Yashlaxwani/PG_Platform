@@ -1,11 +1,16 @@
- 
-import "../Styles/Header.css"
+import { useAuth } from "../contexts/AuthContext";
+import "../Styles/Header.css";
 
 const Header = ({ sidebarCollapsed, setSidebarCollapsed }) => {
+  const { user } = useAuth();
+
   return (
     <header className="header">
       <div className="header-left">
-        <button className="hamburger-btn" onClick={() => setSidebarCollapsed(!sidebarCollapsed)}>
+        <button
+          className="hamburger-btn"
+          onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+        >
           <span></span>
           <span></span>
           <span></span>
@@ -31,13 +36,13 @@ const Header = ({ sidebarCollapsed, setSidebarCollapsed }) => {
         <div className="user-profile">
           <img src="/placeholder.svg?height=32&width=32" alt="User" />
           <div className="user-info">
-            <span className="user-name">Moni Roy</span>
-            <span className="user-role">Admin</span>
+            <span className="user-name">{user?.name || "User"}</span>
+            <span className="user-role">{user?.role || "Admin"}</span>
           </div>
         </div>
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

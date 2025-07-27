@@ -1,47 +1,49 @@
- 
-
-import { useState } from "react"
-import Sidebar from "./components/Sidebar"
-import Header from "./components/Header"
-import Dashboard from "./pages/Dashboard"
-import StaffList from "./pages/StaffList"
-import TenantsList from "./pages/TenantsList"
-import AddActivity from "./pages/AddActivity"
-import "./App.css"
+import { useState } from "react";
+import { Outlet, useLocation } from "react-router-dom";
+import Sidebar from "./components/Sidebar";
+import Header from "./components/Header";
+import "./App.css";
 
 function App() {
-  const [currentPage, setCurrentPage] = useState("dashboard")
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const location = useLocation();
 
-  const renderPage = () => {
-    switch (currentPage) {
-      case "dashboard":
-        return <Dashboard />
-      case "staff":
-        return <StaffList />
-      case "tenants":
-        return <TenantsList />
-      case "add-activity":
-        return <AddActivity />
-      default:
-        return <Dashboard />
-    }
-  }
+  // Get current page from pathname
+  const getCurrentPage = () => {
+    const pathname = location.pathname;
+    if (pathname === "/" || pathname === "/dashboard") return "dashboard";
+    if (pathname === "/staff") return "staff";
+    if (pathname === "/tenants") return "tenants";
+    if (pathname === "/add-activity") return "add-activity";
+    if (pathname === "/room") return "room";
+    if (pathname === "/complaints") return "complaints";
+    if (pathname === "/add-menu") return "add-menu";
+    if (pathname === "/settings") return "settings";
+    return "dashboard";
+  };
 
   return (
     <div className="app">
       <Sidebar
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
+        currentPage={getCurrentPage()}
         collapsed={sidebarCollapsed}
         setCollapsed={setSidebarCollapsed}
       />
-      <div className={`main-content ${sidebarCollapsed ? "sidebar-collapsed" : ""}`}>
-        <Header sidebarCollapsed={sidebarCollapsed} setSidebarCollapsed={setSidebarCollapsed} />
-        <div className="page-content">{renderPage()}</div>
+      <div
+        className={`main-content ${
+          sidebarCollapsed ? "sidebar-collapsed" : ""
+        }`}
+      >
+        <Header
+          sidebarCollapsed={sidebarCollapsed}
+          setSidebarCollapsed={setSidebarCollapsed}
+        />
+        <div className="page-content">
+          <Outlet />
+        </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
