@@ -1,4 +1,4 @@
-
+"use client"
 
 import { useState } from "react"
 import ReactApexChart from "react-apexcharts"
@@ -24,6 +24,7 @@ const Dashboard = () => {
         totalServed: 8260,
         bookedPercentage: [75, 25], // Booked vs Not Booked
         servedPercentage: [85, 15], // Served vs Not Served
+        wastePercentage: [12, 88], // Waste vs No Waste
       },
       lunch: {
         weeklyAvgBooked: 1850,
@@ -32,6 +33,7 @@ const Dashboard = () => {
         totalServed: 12040,
         bookedPercentage: [82, 18],
         servedPercentage: [88, 12],
+        wastePercentage: [8, 92],
       },
       hightea: {
         weeklyAvgBooked: 650,
@@ -40,6 +42,7 @@ const Dashboard = () => {
         totalServed: 4060,
         bookedPercentage: [65, 35],
         servedPercentage: [78, 22],
+        wastePercentage: [15, 85],
       },
       dinner: {
         weeklyAvgBooked: 1950,
@@ -48,6 +51,7 @@ const Dashboard = () => {
         totalServed: 12740,
         bookedPercentage: [88, 12],
         servedPercentage: [92, 8],
+        wastePercentage: [6, 94],
       },
     }
     return baseData[mealType]
@@ -60,29 +64,27 @@ const Dashboard = () => {
     {
       title: "Weekly Avg Booked",
       value: currentData.weeklyAvgBooked.toLocaleString(),
-      change: "8.5% Up from last week",
-      changeType: "up",
-      color: "blue",
+     
+      
     },
     {
       title: "Weekly Avg Served",
       value: currentData.weeklyAvgServed.toLocaleString(),
-      change: "6.2% Up from last week",
-      changeType: "up",
-      color: "orange",
+      
+      
+     
     },
     {
       title: "Total Booked",
       value: currentData.totalBooked.toLocaleString(),
-      change: "12.3% Up from last month",
-      changeType: "up",
-      color: "green",
+     
+     
+     
     },
     {
       title: "Total Served",
       value: currentData.totalServed.toLocaleString(),
-      change: "10.8% Up from last month",
-      changeType: "up",
+    
       color: "red",
     },
   ]
@@ -92,7 +94,7 @@ const Dashboard = () => {
     series: currentData.bookedPercentage,
     options: {
       chart: {
-        width: 380,
+        width: 350,
         type: "pie",
       },
       labels: ["Booked", "Not Booked"],
@@ -102,7 +104,7 @@ const Dashboard = () => {
           breakpoint: 480,
           options: {
             chart: {
-              width: 300,
+              width: 280,
             },
             legend: {
               position: "bottom",
@@ -129,7 +131,7 @@ const Dashboard = () => {
     series: currentData.servedPercentage,
     options: {
       chart: {
-        width: 380,
+        width: 350,
         type: "pie",
       },
       labels: ["Served", "Not Served"],
@@ -139,7 +141,7 @@ const Dashboard = () => {
           breakpoint: 480,
           options: {
             chart: {
-              width: 300,
+              width: 280,
             },
             legend: {
               position: "bottom",
@@ -152,6 +154,43 @@ const Dashboard = () => {
       },
       title: {
         text: "Today's Serving Status",
+        align: "center",
+        style: {
+          fontSize: "16px",
+          fontWeight: "600",
+        },
+      },
+    },
+  }
+
+  // Pie Chart 3: Food Waste Percentage
+  const wastePieChart = {
+    series: currentData.wastePercentage,
+    options: {
+      chart: {
+        width: 350,
+        type: "pie",
+      },
+      labels: ["Waste", "No Waste"],
+      colors: ["#ef4444", "#10b981"],
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 280,
+            },
+            legend: {
+              position: "bottom",
+            },
+          },
+        },
+      ],
+      legend: {
+        position: "bottom",
+      },
+      title: {
+        text: "Food Waste Analysis",
         align: "center",
         style: {
           fontSize: "16px",
@@ -176,7 +215,7 @@ const Dashboard = () => {
     options: {
       chart: {
         type: "bar",
-        height: 350,
+        height: 400,
       },
       plotOptions: {
         bar: {
@@ -233,7 +272,7 @@ const Dashboard = () => {
     options: {
       chart: {
         type: "bar",
-        height: 350,
+        height: 400,
       },
       plotOptions: {
         bar: {
@@ -263,7 +302,7 @@ const Dashboard = () => {
       xaxis: {
         categories: ["Floor 1", "Floor 2", "Floor 3", "Floor 4", "Floor 5", "Floor 6"],
       },
-      colors: ["#3b82f6", "#f59e0b"],
+      colors: ["#3b82f6", "#3b83f66a"],
       title: {
         text: "6 Floor Data - Served vs Pending",
         align: "center",
@@ -305,41 +344,44 @@ const Dashboard = () => {
         ))}
       </div>
 
-      {/* Stats Cards */}
-      <div className="stats-grid">
-        {statsData.map((stat, index) => (
-          <div key={index} className={`stats-card ${getStatCardClass(stat.color)}`}>
-            <div className="stats-content">
-              <div className="stats-text">
-                <h3 className="stats-title">{stat.title}</h3>
-                <p className="stats-value">{stat.value}</p>
-                <div className={`stats-change ${stat.changeType}`}>
-                  <span className="change-icon">{stat.changeType === "up" ? "📈" : "📉"}</span>
-                  <span>{stat.change}</span>
+      {/* Dashboard Grid Layout */}
+      <div className="dashboard-grid">
+        {/* Row 1: Stats Cards (4 boxes) */}
+        <div className="stats-row">
+          {statsData.map((stat, index) => (
+            
+              <div className="stats-content">
+                <div className="stats-text">
+                  <h3 className="stats-title">{stat.title}</h3>
+                  <p className="stats-value">{stat.value}</p>
+                 
                 </div>
-              </div>
+              
             </div>
+          ))}
+        </div>
+
+        {/* Row 2: Pie Charts (3 charts) */}
+        <div className="pie-charts-row">
+          <div className="chart-card">
+            <ReactApexChart options={bookingPieChart.options} series={bookingPieChart.series} type="pie" width={350} />
           </div>
-        ))}
-      </div>
+          <div className="chart-card">
+            <ReactApexChart options={servingPieChart.options} series={servingPieChart.series} type="pie" width={350} />
+          </div>
+          <div className="chart-card">
+            <ReactApexChart options={wastePieChart.options} series={wastePieChart.series} type="pie" width={350} />
+          </div>
+        </div>
 
-      {/* Pie Charts */}
-      <div className="charts-row">
-        <div className="chart-card">
-          <ReactApexChart options={bookingPieChart.options} series={bookingPieChart.series} type="pie" width={380} />
-        </div>
-        <div className="chart-card">
-          <ReactApexChart options={servingPieChart.options} series={servingPieChart.series} type="pie" width={380} />
-        </div>
-      </div>
-
-      {/* Bar Charts */}
-      <div className="charts-row">
-        <div className="chart-card">
-          <ReactApexChart options={floorChart5.options} series={floorChart5.series} type="bar" height={350} />
-        </div>
-        <div className="chart-card">
-          <ReactApexChart options={floorChart6.options} series={floorChart6.series} type="bar" height={350} />
+        {/* Row 3: Bar Charts (2 charts) */}
+        <div className="bar-charts-row">
+          <div className="chart-card">
+            <ReactApexChart options={floorChart5.options} series={floorChart5.series} type="bar" height={400} />
+          </div>
+          <div className="chart-card">
+            <ReactApexChart options={floorChart6.options} series={floorChart6.series} type="bar" height={400} />
+          </div>
         </div>
       </div>
     </div>

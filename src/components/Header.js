@@ -16,10 +16,7 @@ const Header = ({ sidebarCollapsed, setSidebarCollapsed }) => {
           <span></span>
         </button>
 
-        <div className="search-container">
-          <input type="text" placeholder="Search" className="search-input" />
-          <span className="search-icon">🔍</span>
-        </div>
+      
       </div>
 
       <div className="header-right">
