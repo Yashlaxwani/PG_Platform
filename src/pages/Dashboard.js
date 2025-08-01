@@ -1,4 +1,4 @@
-"use client"
+
 
 import { useState } from "react"
 import ReactApexChart from "react-apexcharts"
@@ -8,10 +8,10 @@ const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("breakfast")
 
   const tabs = [
-    { id: "breakfast", label: "Breakfast", color: "#3b82f6" },
-    { id: "lunch", label: "Lunch", color: "#f59e0b" },
-    { id: "hightea", label: "Hightea", color: "#10b981" },
-    { id: "dinner", label: "Dinner", color: "#ef4444" },
+    { id: "breakfast", label: "Breakfast", color: "#4845D2" },
+    { id: "lunch", label: "Lunch", color: "#4845D2" },
+    { id: "hightea", label: "Hightea", color: "#4845D2" },
+    { id: "dinner", label: "Dinner", color: "#4845D2" },
   ]
 
   // Mock data for different meal times
@@ -64,28 +64,18 @@ const Dashboard = () => {
     {
       title: "Weekly Avg Booked",
       value: currentData.weeklyAvgBooked.toLocaleString(),
-     
-      
     },
     {
       title: "Weekly Avg Served",
       value: currentData.weeklyAvgServed.toLocaleString(),
-      
-      
-     
     },
     {
       title: "Total Booked",
       value: currentData.totalBooked.toLocaleString(),
-     
-     
-     
-    },
+     },
     {
       title: "Total Served",
       value: currentData.totalServed.toLocaleString(),
-    
-      color: "red",
     },
   ]
 
@@ -98,7 +88,7 @@ const Dashboard = () => {
         type: "pie",
       },
       labels: ["Booked", "Not Booked"],
-      colors: ["#10b981", "#ef4444"],
+      colors: ["#4845D2", "#0400ff5b"],
       responsive: [
         {
           breakpoint: 480,
@@ -135,7 +125,7 @@ const Dashboard = () => {
         type: "pie",
       },
       labels: ["Served", "Not Served"],
-      colors: ["#3b82f6", "#f59e0b"],
+      colors: ["#4845D2", "#0400ff5b"],
       responsive: [
         {
           breakpoint: 480,
@@ -172,7 +162,7 @@ const Dashboard = () => {
         type: "pie",
       },
       labels: ["Waste", "No Waste"],
-      colors: ["#ef4444", "#10b981"],
+      colors: ["#4845D2", "#0400ff5b"],
       responsive: [
         {
           breakpoint: 480,
@@ -245,7 +235,7 @@ const Dashboard = () => {
       xaxis: {
         categories: ["Floor 1", "Floor 2", "Floor 3", "Floor 4", "Floor 5"],
       },
-      colors: ["#10b981", "#ef4444"],
+      colors: ["#4845D2", "#0400ff5b"],
       title: {
         text: "5 Floor Data - Served vs Pending",
         align: "center",
@@ -302,7 +292,7 @@ const Dashboard = () => {
       xaxis: {
         categories: ["Floor 1", "Floor 2", "Floor 3", "Floor 4", "Floor 5", "Floor 6"],
       },
-      colors: ["#3b82f6", "#3b83f66a"],
+      colors: ["#4845D2", "#0400ef5b"],
       title: {
         text: "6 Floor Data - Served vs Pending",
         align: "center",
@@ -349,15 +339,18 @@ const Dashboard = () => {
         {/* Row 1: Stats Cards (4 boxes) */}
         <div className="stats-row">
           {statsData.map((stat, index) => (
-            
-              <div className="stats-content">
-                <div className="stats-text">
-                  <h3 className="stats-title">{stat.title}</h3>
-                  <p className="stats-value">{stat.value}</p>
+          <div key={index} className={`stats-card `}>
+            <div className="stats-content">
+              <div className="stats-text">
+                <h3 className="stats-title">{stat.title}</h3>
+                <p className="stats-value">{stat.value}</p>
+                <div className={`stats-change ${stat.changeType}`}>
                  
+                  <span>{stat.change}</span>
                 </div>
-              
+              </div>
             </div>
+          </div>
           ))}
         </div>
 
