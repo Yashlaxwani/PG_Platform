@@ -1,29 +1,48 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import "../Styles/Sidebar.css";
+import GridViewIcon from "@mui/icons-material/GridView";
+import AddIcon from "@mui/icons-material/Add";
+import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
+import AddHomeWorkOutlinedIcon from '@mui/icons-material/AddHomeWorkOutlined';
+import SensorDoorOutlinedIcon from '@mui/icons-material/SensorDoorOutlined';
+import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
+import RestaurantOutlinedIcon from '@mui/icons-material/RestaurantOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
 const Sidebar = ({ currentPage, collapsed, setCollapsed }) => {
   const navigate = useNavigate();
   const { logout } = useAuth();
 
   const menuItems = [
-    { id: "dashboard", label: "Dashboard", icon: "📊", path: "/dashboard" },
+    {
+      id: "dashboard",
+      label: "Dashboard",
+      icon: <GridViewIcon />,
+      path: "/dashboard",
+    },
     {
       id: "add-activity",
       label: "Add Activity",
-      icon: "➕",
+      icon: <AddIcon />,
       path: "/add-activity",
     },
-    { id: "staff", label: "Staff", icon: "👥", path: "/staff" },
-    { id: "tenants", label: "Tenants", icon: "🏠", path: "/tenants" },
-    { id: "room", label: "Room", icon: "🚪", path: "/room" },
-    { id: "complaints", label: "Complaints", icon: "📝", path: "/complaints" },
-    { id: "add-menu", label: "Add menu", icon: "🍽️", path: "/add-menu" },
+    {
+      id: "staff",
+      label: "Staff",
+      icon: <PeopleOutlineIcon />,
+      path: "/staff",
+    },
+    { id: "tenants", label: "Tenants", icon: <AddHomeWorkOutlinedIcon />, path: "/tenants" },
+    { id: "room", label: "Room", icon: <SensorDoorOutlinedIcon />, path: "/room" },
+    { id: "complaints", label: "Complaints", icon: <DescriptionOutlinedIcon />, path: "/complaints" },
+    { id: "add-menu", label: "Add menu", icon: <RestaurantOutlinedIcon />, path: "/add-menu" },
   ];
 
   const bottomMenuItems = [
-    { id: "settings", label: "Settings", icon: "⚙️", path: "/settings" },
-    { id: "logout", label: "Logout", icon: "🚪", action: "logout" },
+    { id: "settings", label: "Settings", icon: <SettingsOutlinedIcon />, path: "/settings" },
+    { id: "logout", label: "Logout", icon: <LogoutOutlinedIcon />, action: "logout" },
   ];
 
   const handleNavigation = (item) => {

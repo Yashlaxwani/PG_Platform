@@ -33,7 +33,7 @@ const QRScanner = ({ isOpen, onClose, onScan, type }) => {
     return () => {
       scanner.clear().catch((e) => console.error("Failed to clear scanner:", e))
     }
-  }, [isOpen])
+  }, [isOpen, onScan, onClose, type])
 
   if (!isOpen) return null
 

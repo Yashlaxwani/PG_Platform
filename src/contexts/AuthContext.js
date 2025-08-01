@@ -16,48 +16,106 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const checkAuthStatus = () => {
-      const token = localStorage.getItem("authToken");
-      const userData = localStorage.getItem("userData");
+    const checkAuthStatus = async () => {
+      try {
+        const response = await fetch("/api/auth/verify", {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
-      if (token && userData) {
-        try {
-          const parsedUser = JSON.parse(userData);
-          setUser(parsedUser);
-          setIsAuthenticated(true);
-        } catch (error) {
-          console.error("Error parsing user data:", error);
-          localStorage.removeItem("authToken");
-          localStorage.removeItem("userData");
+        if (response.ok) {
+          const data = await response.json();
+          if (data.isAuthenticated) {
+            setUser(data.user);
+            setIsAuthenticated(true);
+          } else {
+            setUser(null);
+            setIsAuthenticated(false);
+          }
+        } else {
+          setUser(null);
+          setIsAuthenticated(false);
         }
+      } catch (error) {
+        console.error("Authentication check failed:", error);
+        setUser(null);
+        setIsAuthenticated(false);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
 
     checkAuthStatus();
   }, []);
 
-  const login = (userData, token) => {
-    setUser(userData);
-    setIsAuthenticated(true);
-    localStorage.setItem("authToken", token);
-    localStorage.setItem("userData", JSON.stringify(userData));
+  const login = async (credentials) => {
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(credentials),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setUser(data.user);
+        setIsAuthenticated(true);
+
+        document.cookie = `authToken=${data.authToken}; path=/; max-age=${
+          60 * 60 * 24 * 7
+        }`;
+        document.cookie = `pg_id=${data.pg_id}; path=/; max-age=${
+          60 * 60 * 24 * 7
+        }`;
+
+        return { success: true, message: "Login successful" };
+      } else {
+        return {
+          success: false,
+          message: data.message || "Login failed",
+        };
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+      return {
+        success: false,
+        message: "Network error. Please try again.",
+      };
+    }
   };
 
-  const logout = () => {
-    setUser(null);
-    setIsAuthenticated(false);
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("userData");
+  const logout = async () => {
+    try {
+      await fetch("/api/auth/logout", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      setUser(null);
+      setIsAuthenticated(false);
+
+      document.cookie = "authToken=; path=/; max-age=0";
+      document.cookie = "pg_id=; path=/; max-age=0";
+    }
   };
 
-  const value = {
-    isAuthenticated,
-    user,
-    isLoading,
-    login,
-    logout,
-  };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider
+      value={{ isAuthenticated, user, isLoading, login, logout }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
