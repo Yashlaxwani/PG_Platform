@@ -1,4 +1,4 @@
-import axiosInstance from "../../api/axiosInstance";
+// import axiosInstance from "../../api/axiosInstance";
 
 export async function authFormAction({ request }) {
   const formData = await request.formData();
@@ -81,7 +81,6 @@ export async function authFormAction({ request }) {
   } else {
     const secretKey = formData.get("secretKey");
     const password = formData.get("password");
-    const remember = formData.get("remember");
 
     const errors = [];
 

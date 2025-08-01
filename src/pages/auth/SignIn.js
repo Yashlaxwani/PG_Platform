@@ -1,11 +1,10 @@
-import { Form, Link, useActionData, useNavigate } from "react-router-dom";
+import { Form, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import LoginBG from "../../assets/login-bg.png";
 
 export default function SignIn() {
-  const actionData = useActionData();
-  const { login } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
   const navigate = useNavigate();
   const [fieldErrors, setFieldErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
@@ -17,16 +16,10 @@ export default function SignIn() {
   });
 
   useEffect(() => {
-    if (actionData?.success && actionData.data?.token) {
-      const { token, user } = actionData.data;
-      login(user, token);
+    if (!isLoading && isAuthenticated) {
       navigate("/dashboard");
     }
-
-    if (actionData && !actionData.success && actionData.errors) {
-      setFieldErrors(actionData.errors);
-    }
-  }, [actionData]);
+  }, [isAuthenticated, isLoading, navigate]);
 
   const clearFieldError = (fieldName) => {
     if (fieldErrors[fieldName]) {
@@ -48,6 +41,14 @@ export default function SignIn() {
 
     clearFieldError(name);
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden">

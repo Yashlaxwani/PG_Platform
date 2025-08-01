@@ -16,9 +16,9 @@ const ProtectedRoute = ({ children }) => {
     );
   }
 
-//   if (!isAuthenticated) {
-//     return <Navigate to="/signin" state={{ from: location }} replace />;
-//   }
+  if (isAuthenticated) {
+    return <Navigate to="/signin" state={{ from: location }} replace />;
+  }
 
   return children;
 };

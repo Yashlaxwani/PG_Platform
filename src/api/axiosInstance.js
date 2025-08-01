@@ -3,6 +3,7 @@ import axios from "axios";
 const axiosInstance = axios.create({
   baseURL: "https://api.example.com",
   timeout: 10000,
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
@@ -10,29 +11,32 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
+    const cookies = document.cookie.split("; ");
+    const cookieMap = {};
+    cookies.forEach((cookie) => {
+      const [key, value] = cookie.split("=");
+      cookieMap[key] = value;
+    });
 
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    if (cookieMap.authToken) {
+      config.headers["Authorization"] = `Bearer ${cookieMap.authToken}`;
+    }
+
+    if (cookieMap.pg_id) {
+      config.headers["x-pg-id"] = cookieMap.pg_id;
     }
 
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
-    const status = error.response?.status;
-
-    if (status === 401) {
-      console.warn("Unauthorized — redirecting to login...");
+    if (error.response?.status === 401) {
       window.location.href = "/login";
     }
-
     return Promise.reject(error);
   }
 );
