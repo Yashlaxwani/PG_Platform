@@ -1,5 +1,8 @@
 import { useAuth } from "../contexts/AuthContext";
 import "../Styles/Header.css";
+import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 
 const Header = ({ sidebarCollapsed, setSidebarCollapsed }) => {
   const { user } = useAuth();
@@ -11,20 +14,18 @@ const Header = ({ sidebarCollapsed, setSidebarCollapsed }) => {
           className="hamburger-btn"
           onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
         >
-          <span></span>
-          <span></span>
-          <span></span>
+          <MenuOutlinedIcon /> 
         </button>
 
         <div className="search-container">
           <input type="text" placeholder="Search" className="search-input" />
-          <span className="search-icon">🔍</span>
+          <span className="search-icon"><SearchOutlinedIcon /></span>
         </div>
       </div>
 
       <div className="header-right">
         <div className="notification-icon">
-          <span>🔔</span>
+          <span><NotificationsNoneOutlinedIcon /></span>
           <span className="notification-badge">4</span>
         </div>
 
