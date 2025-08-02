@@ -1,4 +1,4 @@
-// import axiosInstance from "../../api/axiosInstance";
+import axios from "axios";
 
 export async function authFormAction({ request }) {
   const formData = await request.formData();
@@ -61,6 +61,30 @@ export async function authFormAction({ request }) {
       };
     }
 
+    await axios.post("http://localhost:8000/graphql", {
+      query: `
+    mutation AddPg($data: PgInput!) {
+      addPg(data: $data) {
+        id
+        name
+        email
+      }
+    }
+  `,
+      variables: {
+        data: {
+          name: "123",
+          email: "123@example.com",
+          password: "password123",
+          phoneNumber: "1234567890",
+          address: "123 Main St",
+          city: "Anytown",
+          state: "CA",
+          postalCode: "12345",
+        },
+      },
+    });
+
     return {
       success: true,
       message: "Sign up form validation successful!",
@@ -71,13 +95,6 @@ export async function authFormAction({ request }) {
         termsAccepted: !!terms,
       },
     };
-
-    // await axiosInstance.post("/signup", {
-    //   name: name.trim(),
-    //   email: email.toLowerCase().trim(),
-    //   password,
-    //   termsAccepted: !!terms,
-    // });
   } else {
     const secretKey = formData.get("secretKey");
     const password = formData.get("password");
@@ -108,6 +125,18 @@ export async function authFormAction({ request }) {
         message: "Validation failed",
       };
     }
+
+    // // const loginResponse = await login({
+    // //   secretKey: secretKey.trim(),
+    // //   password,
+    // // });
+
+    // if (!loginResponse.success) {
+    //   return {
+    //     success: false,
+    //     message: loginResponse.message || "Login failed",
+    //   };
+    // }
 
     return {
       success: true,

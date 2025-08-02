@@ -14,7 +14,7 @@ const Header = ({ sidebarCollapsed, setSidebarCollapsed }) => {
           className="hamburger-btn"
           onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
         >
-          <MenuOutlinedIcon /> 
+          <MenuOutlinedIcon />   
         </button>
 
       

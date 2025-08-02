@@ -1,44 +1,47 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://api.example.com",
+  baseURL: "http://localhost:8000/graphql",
   timeout: 10000,
-  withCredentials: true,
+  // withCredentials: true,
   headers: {
     "Content-Type": "application/json",
+    pg_id: "ea813d9e-fef8-4a2d-855c-e9bac8501b19",
   },
 });
 
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const cookies = document.cookie.split("; ");
-    const cookieMap = {};
-    cookies.forEach((cookie) => {
-      const [key, value] = cookie.split("=");
-      cookieMap[key] = value;
-    });
+// axiosInstance.interceptors.request.use(
+//   (config) => {
+//     // const cookies = document.cookie.split("; ");
+//     // const cookieMap = {};
+//     // cookies.forEach((cookie) => {
+//     //   const [key, value] = cookie.split("=");
+//     //   cookieMap[key] = value;
+//     // });
 
-    if (cookieMap.authToken) {
-      config.headers["Authorization"] = `Bearer ${cookieMap.authToken}`;
-    }
+//     // if (cookieMap.authToken) {
+//     //   config.headers["Authorization"] = `Bearer ${cookieMap.authToken}`;
+//     // }
 
-    if (cookieMap.pg_id) {
-      config.headers["x-pg-id"] = cookieMap.pg_id;
-    }
+//     // config.headers["pg_id"] = "ea813d9e-fef8-4a2d-855c-e9bac8501b19";
 
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+//     // if (cookieMap.pg_id) {
+//     //   config.headers["pg_id"] = cookieMap.pg_id;
+//     // }
 
-axiosInstance.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      window.location.href = "/login";
-    }
-    return Promise.reject(error);
-  }
-);
+//     return config;
+//   },
+//   (error) => Promise.reject(error)
+// );
+
+// axiosInstance.interceptors.response.use(
+//   (response) => response,
+//   (error) => {
+//     if (error.response?.status === 401) {
+//       window.location.href = "/login";
+//     }
+//     return Promise.reject(error);
+//   }
+// );
 
 export default axiosInstance;

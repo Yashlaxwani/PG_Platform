@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import axios from "axios";
 
 const AuthContext = createContext();
 
@@ -18,23 +19,11 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
-        const response = await fetch("/api/auth/verify", {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await axios.get("/api/auth/verify");
 
-        if (response.ok) {
-          const data = await response.json();
-          if (data.isAuthenticated) {
-            setUser(data.user);
-            setIsAuthenticated(true);
-          } else {
-            setUser(null);
-            setIsAuthenticated(false);
-          }
+        if (response.data.isAuthenticated) {
+          setUser(response.data.user);
+          setIsAuthenticated(true);
         } else {
           setUser(null);
           setIsAuthenticated(false);
@@ -53,26 +42,19 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (credentials) => {
     try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(credentials),
-      });
+      const response = await axios.post("/api/auth/login", credentials);
 
-      const data = await response.json();
+      const data = response.data;
 
-      if (response.ok && data.success) {
+      if (data.success) {
         setUser(data.user);
         setIsAuthenticated(true);
 
         document.cookie = `authToken=${data.authToken}; path=/; max-age=${
-          60 * 60 * 24 * 7
+          60 * 60 * 24
         }`;
         document.cookie = `pg_id=${data.pg_id}; path=/; max-age=${
-          60 * 60 * 24 * 7
+          60 * 60 * 24
         }`;
 
         return { success: true, message: "Login successful" };
@@ -93,13 +75,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await fetch("/api/auth/logout", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      await axios.post("/api/auth/logout");
     } catch (error) {
       console.error("Logout error:", error);
     } finally {

@@ -8,7 +8,6 @@ function App() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const location = useLocation();
 
-  // Get current page from pathname
   const getCurrentPage = () => {
     const pathname = location.pathname;
     if (pathname === "/" || pathname === "/dashboard") return "dashboard";
