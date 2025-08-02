@@ -26,15 +26,12 @@
   gap: 12px;
 }
 
-.logo-icon {
-  font-size: 24px;
-  width: 32px;
+.logo-icon-img {
+  width: 42px; /* or your desired size */
   height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #6366f1;
-  border-radius: 8px;
+  object-fit: contain;
+  margin-right: 1px;
+  transition: all 0.3s;
 }
 
 .logo-text {

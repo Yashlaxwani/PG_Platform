@@ -304,15 +304,6 @@ const Dashboard = () => {
     },
   }
 
-  const getStatCardClass = (color) => {
-    const colorClasses = {
-      blue: "stat-card-blue",
-      orange: "stat-card-orange",
-      green: "stat-card-green",
-      red: "stat-card-red",
-    }
-    return colorClasses[color] || "stat-card-blue"
-  }
 
   return (
     <div className="dashboard">

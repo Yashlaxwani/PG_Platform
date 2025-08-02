@@ -60,9 +60,14 @@ const Sidebar = ({ currentPage, collapsed, setCollapsed }) => {
     <div className={`sidebar ${collapsed ? "collapsed" : ""}`}>
       <div className="sidebar-header">
         <div className="logo">
-          <span className="logo-icon">📱</span>
-          {!collapsed && <span className="logo-text">DashStack</span>}
+          <img
+            src={require("../assets/images/Wander-Vibes-logo.webp")}
+            alt="Logo"
+            className="logo-icon-img"
+          />
+          {!collapsed && <span className="logo-text">Smart Living PG</span>}
         </div>
+
       </div>
 
       <nav className="sidebar-nav">
@@ -70,9 +75,8 @@ const Sidebar = ({ currentPage, collapsed, setCollapsed }) => {
           {menuItems.map((item) => (
             <li key={item.id} className="nav-item">
               <button
-                className={`nav-link ${
-                  currentPage === item.id ? "active" : ""
-                }`}
+                className={`nav-link ${currentPage === item.id ? "active" : ""
+                  }`}
                 onClick={() => handleNavigation(item)}
                 title={collapsed ? item.label : ""}
               >

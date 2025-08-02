@@ -37,17 +37,31 @@
 }
 
 .mess-card::before {
-  background: linear-gradient(90deg, #f59e0b, #eab308);
+  background: #4845D2;
 }
 
 .laundry-card::before {
-  background: linear-gradient(90deg, #06b6d4, #0891b2);
+  background: #4845D2;
 }
 
+
 .card-icon {
-  font-size: 64px;
-  margin-bottom: 16px;
-  opacity: 0.8;
+  margin-bottom: 10px;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card-icon svg {
+  width: 50px;
+  height: 50px;
+  color: #3f3f46;
+  transition: transform 0.3s ease;
+}
+
+.activity-card:hover .card-icon svg {
+  transform: scale(1.1);
+  color: #4845D2; 
 }
 
 .activity-card h3 {
