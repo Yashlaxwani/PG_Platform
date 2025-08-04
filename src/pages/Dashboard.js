@@ -206,6 +206,11 @@ const Dashboard = () => {
       chart: {
         type: "bar",
         height: 400,
+         toolbar: {
+    show: false,
+    offsetX: 0,
+    offsetY: -30,  
+  }
       },
       plotOptions: {
         bar: {
@@ -249,60 +254,66 @@ const Dashboard = () => {
 
   // Bar Chart 2: 6 Floor Data
   const floorChart6 = {
-    series: [
-      {
-        name: "Served",
-        data: [135, 108, 92, 125, 88, 95],
-      },
-      {
-        name: "Pending",
-        data: [28, 18, 25, 22, 15, 20],
-      },
-    ],
-    options: {
-      chart: {
-        type: "bar",
-        height: 400,
-      },
-      plotOptions: {
-        bar: {
-          horizontal: true,
-          dataLabels: {
-            position: "top",
-          },
-        },
-      },
-      dataLabels: {
-        enabled: true,
-        offsetX: -6,
-        style: {
-          fontSize: "12px",
-          colors: ["#fff"],
-        },
-      },
-      stroke: {
-        show: true,
-        width: 1,
-        colors: ["#fff"],
-      },
-      tooltip: {
-        shared: true,
-        intersect: false,
-      },
-      xaxis: {
-        categories: ["Floor 1", "Floor 2", "Floor 3", "Floor 4", "Floor 5", "Floor 6"],
-      },
-      colors: ["#4845D2", "#0400ef5b"],
-      title: {
-        text: "6 Floor Data - Served vs Pending",
-        align: "center",
-        style: {
-          fontSize: "16px",
-          fontWeight: "600",
+  series: [
+    {
+      name: "Served",
+      data: [135, 108, 92, 125, 88, 95],
+    },
+    {
+      name: "Pending",
+      data: [28, 18, 25, 22, 15, 20],
+    },
+  ],
+  options: {
+    chart: {
+      type: "bar",
+      height: 400,
+      toolbar: {
+        show: false,
+        offsetX: 0,
+        offsetY: -30
+      }
+    },
+    plotOptions: {
+      bar: {
+        horizontal: true,
+        dataLabels: {
+          position: "top",
         },
       },
     },
-  }
+    dataLabels: {
+      enabled: true,
+      offsetX: -6,
+      style: {
+        fontSize: "12px",
+        colors: ["#fff"],
+      },
+    },
+    stroke: {
+      show: true,
+      width: 1,
+      colors: ["#fff"],
+    },
+    tooltip: {
+      shared: true,
+      intersect: false,
+    },
+    xaxis: {
+      categories: ["Floor 1", "Floor 2", "Floor 3", "Floor 4", "Floor 5", "Floor 6"],
+    },
+    colors: ["#4845D2", "#0400ef5b"],
+    title: {
+      text: "6 Floor Data - Served vs Pending",
+      align: "center",
+      style: {
+        fontSize: "16px",
+        fontWeight: "600",
+      },
+    },
+  },
+};
+
 
 
   return (
@@ -348,13 +359,13 @@ const Dashboard = () => {
         {/* Row 2: Pie Charts (3 charts) */}
         <div className="pie-charts-row">
           <div className="chart-card">
-            <ReactApexChart options={bookingPieChart.options} series={bookingPieChart.series} type="pie" width={350} />
+            <ReactApexChart options={bookingPieChart.options} series={bookingPieChart.series} type="pie" width="100%" />
           </div>
           <div className="chart-card">
-            <ReactApexChart options={servingPieChart.options} series={servingPieChart.series} type="pie" width={350} />
+            <ReactApexChart options={servingPieChart.options} series={servingPieChart.series} type="pie" width="100%" />
           </div>
           <div className="chart-card">
-            <ReactApexChart options={wastePieChart.options} series={wastePieChart.series} type="pie" width={350} />
+            <ReactApexChart options={wastePieChart.options} series={wastePieChart.series} type="pie" width="100%" />
           </div>
         </div>
 
